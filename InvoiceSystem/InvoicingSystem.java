@@ -1,5 +1,6 @@
 package InvoiceSystem;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -160,7 +161,6 @@ public class InvoicingSystem {
         items.add(newItem); //adding the item to the items list
 
         System.out.println("Item Added Successfully..");
-        System.out.println(items);
     }
 
     //method to delete items (option 2 in Manage Items Menu)
@@ -193,6 +193,30 @@ public class InvoicingSystem {
     //method to change item price (option 3 in Manage Items Menu)
     private static void changeItemPrice(){
         System.out.println("Updating Price . .");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter item ID to update the price: ");
+        Integer updatePrice = Integer.valueOf(scanner.next());
+
+        Boolean isFound = Boolean.FALSE;
+
+
+        for (Item item : items){
+            if (item.getItemID().equals(updatePrice)){
+                System.out.println("Enter new price: ");
+                Double newPrice = scanner.nextDouble();
+
+                //updating the price
+                item.setUnitPrice(newPrice);
+                System.out.println("Item price updated successfully");
+
+                isFound = Boolean.TRUE;
+                break;
+            }
+        }
+        if (!isFound){
+            System.out.println("Item with ID " + updatePrice + " not found");
+        }
+
     }
 
     //method to report all items (option 4 in Manage Items Menu)
