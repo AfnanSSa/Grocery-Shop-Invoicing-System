@@ -143,28 +143,51 @@ public class InvoicingSystem {
     //method to add items (option 1 in Manage Items Menu)
     private static void addItem(){
         System.out.println("Adding Item . .");
+
         //asking user to enter item details
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter item ID: ");
-        String itemId = scanner.nextLine();
+        Integer itemID = scanner.nextInt();
+        scanner.nextLine(); //consuming newline character after reading Integer
         System.out.print("Enter item name: ");
-        String itemName = scanner.nextLine();
+        String name = scanner.nextLine();
         System.out.print("Enter unit price: ");
         double unitPrice = scanner.nextDouble();
         System.out.print("Enter quantity: ");
         int quantity = scanner.nextInt();
 
-        Item newItem = new Item();
+        Item newItem = new Item(itemID, name, unitPrice, quantity);
         items.add(newItem); //adding the item to the items list
 
         System.out.println("Item Added Successfully..");
+        System.out.println(items);
     }
 
     //method to delete items (option 2 in Manage Items Menu)
     private static void deleteItem(){
         System.out.println("Deleting Item . .");
         //asking user to select and delete an item from the items list
-        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter item ID to delete: ");
+        Integer deleteItem = Integer.valueOf(scanner.next());
+
+        //finding and removing the item from the items list
+        Boolean isFound = Boolean.FALSE;
+        Item itemToRemove = null;
+
+        for (Item item : items){
+            if (item != null && item.getItemID() != null && item.getItemID().equals(deleteItem)){
+                itemToRemove = item;
+                isFound = Boolean.TRUE;
+                break;
+            }
+        }
+        if (isFound){
+            items.remove(itemToRemove);
+            System.out.println("Item deleted successfully");
+        }else {
+            System.out.println("Item with ID " + deleteItem + " not found");
+        }
     }
 
     //method to change item price (option 3 in Manage Items Menu)
