@@ -14,6 +14,13 @@ public class Item {
         return quantity * unitPrice;
     }
 
+    public Item(Integer itemID, String name, Double unitPrice, Integer quantity) {
+        this.itemID = itemID;
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+
     //Getters & Setters
     public Integer getId() {
         return id;
