@@ -83,6 +83,7 @@ public class InvoicingSystem {
     private static void loadData(){
         System.out.println("Loading Data . .");
         //action of loading data
+
     }
 
     //method to set shop name (option 2 in Shop Settings Menu)
@@ -143,18 +144,32 @@ public class InvoicingSystem {
     private static void addItem(){
         System.out.println("Adding Item . .");
         //asking user to enter item details
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter item ID: ");
+        String itemId = scanner.nextLine();
+        System.out.print("Enter item name: ");
+        String itemName = scanner.nextLine();
+        System.out.print("Enter unit price: ");
+        double unitPrice = scanner.nextDouble();
+        System.out.print("Enter quantity: ");
+        int quantity = scanner.nextInt();
+
+        Item newItem = new Item();
+        items.add(newItem); //adding the item to the items list
+
+        System.out.println("Item Added Successfully..");
     }
 
     //method to delete items (option 2 in Manage Items Menu)
     private static void deleteItem(){
         System.out.println("Deleting Item . .");
         //asking user to select and delete an item from the items list
+        
     }
 
     //method to change item price (option 3 in Manage Items Menu)
     private static void changeItemPrice(){
         System.out.println("Updating Price . .");
-        //asking user to select item and update the price
     }
 
     //method to report all items (option 4 in Manage Items Menu)
