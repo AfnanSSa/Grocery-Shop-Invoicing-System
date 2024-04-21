@@ -223,6 +223,14 @@ public class InvoicingSystem {
     private static void reportAllItems(){
         System.out.println("Reporting All Items . .");
         //displaying report of all items in items list
+        if (items.isEmpty()){
+            System.out.println("No items available");
+        } else {
+            System.out.println("List of items: ");
+            for (Item item : items){
+                System.out.println(item);
+            }
+        }
     }
 
     //method to handle option 3 in Main Menu (create nwe invoice)
