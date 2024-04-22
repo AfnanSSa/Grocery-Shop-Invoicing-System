@@ -1,6 +1,5 @@
 package InvoiceSystem;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -235,13 +234,51 @@ public class InvoicingSystem {
 
     //method to handle option 3 in Main Menu (create nwe invoice)
     private static void createInvoice(){
+        Invoice invoice = new Invoice();
         System.out.println("Creating New Invoice . .");
-        //asking user to input invoice details + adding it to invoices list
+        Scanner scanner = new Scanner(System.in);
+
+        //asking user to input invoice details
+        System.out.print("Enter invoice ID: ");
+        Integer invoiceID = scanner.nextInt();
+        scanner.nextLine(); //consume new line
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter customer phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter invoice date (e.g., DD-MM-YYYY): ");
+        String date = scanner.nextLine();
+
+        //create a list to store items
+        List<Item> itemList = new ArrayList<>();
+
+        //showing items from the items list
+        for (Item item : items){
+            System.out.println("ID   |    Name    |  Qty. |   Unit price   |    Total");
+            System.out.println(item.getItemID() + "    |    "+ item.getName() + "     |  " +
+                    item.getQuantity() + "  |   " + item.getUnitPrice()+ "    |    "+
+                    item.totalAmount(item.getQuantity(), item.getUnitPrice()));
+
+            //create new object for the invoice
+            Item newItem = new Item(item.getItemID(), item.getName(), item.getUnitPrice(), item.getQuantity());
+            itemList.add(newItem);
+        }
+        //displaying the result of calculating the total amount
+        System.out.println("Total Amount: " + invoice.totalAmount(itemList));
+
+        //creating new invoice object with gathered details
+        Invoice newInvoice = new Invoice(invoiceID, customerName, phoneNumber,date, itemList, invoice.totalAmount(itemList));
+
+        //adding the new invoice to the invoices list
+        invoices.add(newInvoice);
+
+        System.out.println("Invoice created successfully");
     }
 
     //method to handle option 4 in Main Menu (Report Item Statistics)
     private static void reportItemStatistics(){
         System.out.println("Displaying statistics...");
+
     }
     //method to handle option 5 in Main Menu (Report All Invoices)
     private static void reportAllInvoices(){
