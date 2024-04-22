@@ -11,8 +11,22 @@ public class Invoice {
     private String date; //invoice date
     private List<Item> itemList;
     private Double totalAmount;
-    private Double payedAmount;
+    private Double paidAmount;
     private Double balance;
+
+    //constructor
+
+    public Invoice() {
+    }
+
+    public Invoice(Integer invoiceID, String costumerName, String phoneNumber, String date, List<Item> itemList, Double totalAmount) {
+        this.invoiceID = invoiceID;
+        this.costumerName = costumerName;
+        this.phoneNumber = phoneNumber;
+        this.date = date;
+        this.itemList = itemList;
+        this.totalAmount = totalAmount;
+    }
 
     //Getters & Setters
     public Integer getId() {
@@ -71,12 +85,12 @@ public class Invoice {
         this.totalAmount = totalAmount;
     }
 
-    public Double getPayedAmount() {
-        return payedAmount;
+    public Double getPaidAmount() {
+        return paidAmount;
     }
 
-    public void setPayedAmount(Double payedAmount) {
-        this.payedAmount = payedAmount;
+    public void setPaidAmount(Double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public Double getBalance() {
@@ -88,13 +102,13 @@ public class Invoice {
     }
 
     //methode to calculate total amount of invoice
-    public void totalAmount() {
+    public Double totalAmount(List<Item> itemList) {
 
         /* Error Handling */
         if (itemList == null || itemList.isEmpty()) { //if item list is empty
             //prompting user that item list is empty
             System.out.println("\nError: Item list is empty. Cannot calculate total amount.");
-            return; //quitting method
+            return 0.0; //quitting method
         }
 
         double total = 0.0;
@@ -114,12 +128,12 @@ public class Invoice {
             }
         }
 
-        this.totalAmount = total;
+        return total;
     }
 
     //method to update balance
     public void updateBalance() {
-        this.balance = this.totalAmount - this.payedAmount;
+        this.balance = this.totalAmount - this.paidAmount;
     }
 
     //equals()
@@ -147,7 +161,7 @@ public class Invoice {
                 ", date='" + date + '\'' +
                 ", itemList=" + itemList +
                 ", totalAmount=" + totalAmount +
-                ", payedAmount=" + payedAmount +
+                ", payedAmount=" + paidAmount +
                 ", balance=" + balance +
                 '}';
     }
