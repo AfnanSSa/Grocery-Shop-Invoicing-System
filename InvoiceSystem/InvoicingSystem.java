@@ -278,7 +278,17 @@ public class InvoicingSystem {
     //method to handle option 4 in Main Menu (Report Item Statistics)
     private static void reportItemStatistics(){
         System.out.println("Displaying statistics...");
+        System.out.println("Number of items: " + items.size());
+        System.out.println("Number of invoices: " + invoices.size());
 
+        //calculating the total sales
+        Double totalSales = 0.0;
+        for (Invoice invoice : invoices){
+            totalSales +=  invoice.getTotalAmount();
+        }
+
+        //displaying total sales
+        System.out.println("Total sales: $" + totalSales);
     }
     //method to handle option 5 in Main Menu (Report All Invoices)
     private static void reportAllInvoices(){
