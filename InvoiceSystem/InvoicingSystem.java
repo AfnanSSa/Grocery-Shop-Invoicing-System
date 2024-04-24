@@ -1,8 +1,6 @@
 package InvoiceSystem;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class InvoicingSystem {
     private static Scanner scanner = new Scanner(System.in);
@@ -11,6 +9,9 @@ public class InvoicingSystem {
     //Lists to store invoiced and items
     private static List<Item> items = new ArrayList<>();
     private static List<Invoice> invoices = new ArrayList<>();
+
+    //hashmap to store program statistics
+    private static Map<Integer, Integer> menuOptionsQounts = new HashMap<>();
     public static Invoice newInvoice;
 
     public static void main(String[] args) {
@@ -47,7 +48,7 @@ public class InvoicingSystem {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-
+            recordOptionsSelected(option);
         }
         System.out.println("Exiting Invoicing System. Bye!");
         scanner.close();
@@ -77,6 +78,9 @@ public class InvoicingSystem {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
+
+            //recording selected options
+            recordOptionsSelected(option);
         }
     }
 
@@ -138,6 +142,8 @@ public class InvoicingSystem {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
+            //recording selected options
+            recordOptionsSelected(option);
         }
     }
 
@@ -411,9 +417,28 @@ public class InvoicingSystem {
     //method to handle option 7 in Main Menu (Program Statistics)
     private static void handleProgramStatistics() {
         System.out.println("Displaying Program Statistics...");
-        //action of displaying program statistics
+
+        if (menuOptionsQounts.isEmpty()){
+            System.out.println("No menu options have been selected");
+            return;
+        }
+
+        System.out.println("Menu Option Statistics:");
+        System.out.println("----------------------------");
+        for (Map.Entry<Integer, Integer> entry : menuOptionsQounts.entrySet()){
+            Integer option = entry.getKey();
+            Integer count = entry.getValue();
+            System.out.println("Option " + option + " had been selected " + count + " times");
+        }
+
+        System.out.println("----------------------------");
+
     }
 
+    //method to record options selected
+    private static void recordOptionsSelected(Integer option){
+        menuOptionsQounts.put(option, menuOptionsQounts.getOrDefault(option, 0) + 1);
+    }
     //method to handle option 8 in Main Menu (Exit)
     private static Boolean confirmExit() {
         System.out.print("Are you sure you want to exit? (yes/no): ");
