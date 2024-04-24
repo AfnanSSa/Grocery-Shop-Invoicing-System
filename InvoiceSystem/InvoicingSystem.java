@@ -366,9 +366,46 @@ public class InvoicingSystem {
 
     //method to handle option 6 in Main Menu (Search Invoices)
     private static void searchInvoices() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Searching Invoices . .");
-        //asking user to enter ID of invoice
-        //action of search
+
+        //asking user to enter invoice ID
+        System.out.println("Enter invoice ID: ");
+        Integer invoiceToFind = scanner.nextInt();
+
+        Boolean isFound = Boolean.FALSE;
+        //iterating through invoices list to find the matching invoice
+        for (Invoice invoice : invoices){
+
+            if (invoice.getInvoiceID() == invoiceToFind){
+                isFound = Boolean.TRUE;
+
+                //displaying found invoice details
+                System.out.println("Invoice Details:");
+                System.out.println("Invoice ID: " + invoice.getInvoiceID());
+                System.out.println("Customer Name: " + invoice.getCostumerName());
+                System.out.println("Phone Number: " + invoice.getPhoneNumber());
+                System.out.println("Date: " + invoice.getDate());
+                System.out.println("Total Amount: $" + invoice.getTotalAmount());
+
+                //displaying items associated with the invoice
+                System.out.println("\nItems:");
+                System.out.printf("%-8s %-15s %-8s %-10s%n",
+                        "Item ID", "Name", "Quantity", "Unit Price");
+                System.out.println("-------------------------------------------");
+                for (Item item : invoice.getItemList()) {
+                    System.out.printf("%-8d %-15s %-8d $%-10.2f%n",
+                            item.getItemID(), item.getName(),
+                            item.getQuantity(), item.getUnitPrice());
+                }
+                System.out.println("-------------------------------------------");
+                break;
+            }
+        }
+        //if ID is not found
+        if (!isFound){
+            System.out.println("Invoice with ID " + invoiceToFind + " is not found");        }
+
     }
 
     //method to handle option 7 in Main Menu (Program Statistics)
