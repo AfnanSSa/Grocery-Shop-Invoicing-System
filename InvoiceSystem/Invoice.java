@@ -28,6 +28,13 @@ public class Invoice {
         this.totalAmount = totalAmount;
     }
 
+    public Invoice(Integer invoiceID, String costumerName, String phoneNumber, String date) {
+        this.invoiceID = invoiceID;
+        this.costumerName = costumerName;
+        this.phoneNumber = phoneNumber;
+        this.date = date;
+    }
+
     //Getters & Setters
     public Integer getId() {
         return id;
