@@ -339,8 +339,29 @@ public class InvoicingSystem {
 
     //method to handle option 5 in Main Menu (Report All Invoices)
     private static void reportAllInvoices() {
-        System.out.println("Displaying All Invoices...");
-        //action of displaying report
+        System.out.println("Reporting All Invoices..");
+        System.out.println("--------------------------------------------------------------------------------------");
+
+        if (invoices.isEmpty()) {
+            System.out.println("No invoices found.");
+            System.out.println("--------------------------------------------------------------------------------------");
+            return;
+        }
+
+        System.out.printf("%-12s %-20s %-15s %-12s %-12s%n",
+                "Invoice ID", "Customer Name", "Phone Number", "Date", "Total Amount");
+        System.out.println("--------------------------------------------------------------------------------------");
+
+        for (Invoice invoice : invoices) {
+            System.out.printf("%-12d %-20s %-15s %-12s $%-10.2f%n",
+                    invoice.getInvoiceID(),
+                    invoice.getCostumerName(),
+                    invoice.getPhoneNumber(),
+                    invoice.getDate(),
+                    invoice.getTotalAmount());
+        }
+
+        System.out.println("--------------------------------------------------------------------------------------");
     }
 
     //method to handle option 6 in Main Menu (Search Invoices)
