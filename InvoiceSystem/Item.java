@@ -9,6 +9,7 @@ public class Item {
     private Double unitPrice;
     private Integer quantity;
 
+
     //method to calculate total amount
     public Double totalAmount(Integer quantity, Double unitPrice){
         return quantity * unitPrice;
