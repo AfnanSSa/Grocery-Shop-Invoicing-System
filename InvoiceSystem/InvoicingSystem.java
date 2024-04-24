@@ -271,7 +271,7 @@ public class InvoicingSystem {
                 Item itemToBeAdded = findItemByID(itemID); //finding to item by its ID
                 if (itemToBeAdded != null) {
                     selectedItems.add(itemToBeAdded); //adding the item to selected items list
-                    System.out.println("Item: " + itemToBeAdded.getName() + "is added to the invoice");
+                    System.out.println("Item: " + itemToBeAdded.getName() + " is added to the invoice");
                 } else {
                     System.out.println("Item not found");
                 }
@@ -286,12 +286,16 @@ public class InvoicingSystem {
             //printing the invoice
             System.out.println("\nInvoice Details:");
             System.out.println("-------------------------------------------");
-            System.out.println("Item ID\tItem Name\tQuantity\tUnit Price\tTotal\tAmount");
+            System.out.println("Item ID \t  Item Name\t Quantity\t  Unit Price\t    Total Amount");
             for (Item item : selectedItems) {
-                System.out.println(item.getItemID() + " \t\t " + item.getName() + " \t\t " +
-                        item.getQuantity() + " \t\t " + item.getUnitPrice() + " \t\t " + item.totalAmount(item.getQuantity(), item.getUnitPrice()));
+                System.out.printf("%d   \t%s    \t%d    \t%.2f  \t%.2f%n",
+                        item.getItemID(),
+                        item.getName(),
+                        item.getQuantity(),
+                        item.getUnitPrice(),
+                        item.getQuantity() * item.getUnitPrice());
             }
-            System.out.println("Total Amount: " + newInvoice.totalAmount(selectedItems));
+            System.out.println("Total Amount: $" + newInvoice.totalAmount(selectedItems));
         }
     }
 
@@ -315,16 +319,6 @@ public class InvoicingSystem {
                             "| Quantity: " + item.getQuantity()
             );
         }
-    }
-
-    //method to print invoice
-    private static void printInvoice(Invoice invoice) {
-        System.out.println("Invoice ID: " + invoice.getInvoiceID() +
-                "\nCostumer Name: " + invoice.getCostumerName() +
-                "\nCustomer Phone No.: " + invoice.getPhoneNumber() +
-                "\nDate pf invoice:" + invoice.getDate() +
-                "\nItem Id");
-
     }
 
     //method to handle option 4 in Main Menu (Report Item Statistics)
