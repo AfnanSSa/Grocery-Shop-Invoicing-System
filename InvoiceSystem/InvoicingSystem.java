@@ -87,7 +87,21 @@ public class InvoicingSystem {
     //method to load data (option 1 in Shop Settings Menu)
     private static void loadData() {
         System.out.println("Loading Data . .");
-        //action of loading data
+        //instances of Item Class
+        Item firstItem = new Item(7, "Bread", 1.0, 2);
+        Item secondItem = new Item(9, "Cheese", 2.0, 3);
+
+        //adding items to the item list
+        items.add(firstItem);
+        items.add(secondItem);
+
+        //instance of Invoice Class
+        Invoice invoice = new Invoice(9, "Noura", "3342454", "25-04-2024", items, firstItem.totalAmount(2, 1.0));
+
+        //adding invoice to invoice list
+        invoices.add(invoice);
+
+        System.out.println("Data loaded successfully");
 
     }
 
@@ -439,6 +453,7 @@ public class InvoicingSystem {
     private static void recordOptionsSelected(Integer option){
         menuOptionsQounts.put(option, menuOptionsQounts.getOrDefault(option, 0) + 1);
     }
+    
     //method to handle option 8 in Main Menu (Exit)
     private static Boolean confirmExit() {
         System.out.print("Are you sure you want to exit? (yes/no): ");
