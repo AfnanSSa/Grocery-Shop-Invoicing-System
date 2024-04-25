@@ -6,7 +6,7 @@ public class Shop {
     static Scanner scanner = new Scanner(System.in);
     private Integer id; //class ID
     private String name; //shop name
-    private Map<String, String> header; //shop header
+    private static Map<String, String> header; //shop header
     public static List<Item> items = new ArrayList<>();
     public static List<Invoice> invoices = new ArrayList<>();
 
@@ -25,6 +25,14 @@ public class Shop {
 
     public void setHeader(Map<String, String> header) {
         this.header = header;
+    }
+
+    public static List<Item> getItems() {
+        return items;
+    }
+
+    public static void setItems(List<Item> items) {
+        Shop.items = items;
     }
 
     //methods related to shop
@@ -64,12 +72,16 @@ public class Shop {
         System.out.println("\nEnter new invoice header:");
         System.out.print("Tel: ");
         String telNumber = scanner.nextLine();
+        header.put("Phone number", telNumber);
         System.out.print("Fax: ");
         String fax = scanner.nextLine();
+        header.put("Fax", fax);
         System.out.print("Email: ");
         String email = scanner.nextLine();
+        header.put("Email", email);
         System.out.print("Website: ");
         String website = scanner.nextLine();
+        header.put("Website", website);
         //setting shop header
         System.out.println("\nInvoice header set to: Tel: " +
                 telNumber + " | Fax: " + fax + " | Email " +
