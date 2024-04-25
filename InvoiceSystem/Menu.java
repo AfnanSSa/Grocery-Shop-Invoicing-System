@@ -1,14 +1,16 @@
 package InvoiceSystem;
+
 import java.util.Scanner;
 
 public class Menu {
     private Scanner scanner;
+
     public Menu() {
         this.scanner = new Scanner(System.in);
     }
 
     //method to display and handle main menu
-    public Integer displayMainMenu(){
+    public Integer displayMainMenu() {
         System.out.println("\n:::Menu:::\nSelect option:");
         System.out.println("1. Shop Settings");
         System.out.println("2. Manage Shop Items");
@@ -24,7 +26,7 @@ public class Menu {
     }
 
     //method to display and handle shop settings menu
-    public Integer displayShopSettingsMenu(){
+    public Integer displayShopSettingsMenu() {
         System.out.println("Shop Settings:");
         System.out.println("1. Load Data (Items and invoices)");
         System.out.println("2. Set Shop Name");
@@ -36,7 +38,7 @@ public class Menu {
     }
 
     //method to display and handle manage shop items menu
-    public Integer displayManageItemsMenu(){
+    public Integer displayManageItemsMenu() {
         System.out.println("Manage Shop Items:");
         System.out.println("1. Add Items");
         System.out.println("2. Delete Items");
@@ -49,7 +51,7 @@ public class Menu {
     }
 
     //method to display and handle program statistics
-    public Integer displayProgramStatisticsMenu(){
+    public Integer displayProgramStatisticsMenu() {
         System.out.println("Program Statistics:");
         System.out.println("1. Show Menu Usage Statistics");
         System.out.println("2. Go Back");
