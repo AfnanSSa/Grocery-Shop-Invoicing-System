@@ -1,7 +1,9 @@
 package InvoiceSystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Invoice {
     private Integer id; //class ID
@@ -9,7 +11,9 @@ public class Invoice {
     private String costumerName;
     private String phoneNumber; //costumer phone number
     private String date; //invoice date
-    private List<Item> itemList;
+    public static List<Item> items = new ArrayList<>();
+    public static List<Invoice> invoices = new ArrayList<>();
+    public static Invoice newInvoice;
     private Double totalAmount;
     private Double paidAmount;
     private Double balance;
@@ -24,15 +28,184 @@ public class Invoice {
         this.costumerName = costumerName;
         this.phoneNumber = phoneNumber;
         this.date = date;
-        this.itemList = itemList;
+        this.items = itemList;
         this.totalAmount = totalAmount;
     }
 
-    public Invoice(Integer invoiceID, String costumerName, String phoneNumber, String date) {
-        this.invoiceID = invoiceID;
-        this.costumerName = costumerName;
-        this.phoneNumber = phoneNumber;
-        this.date = date;
+    //method to handle option 3 in Main Menu (create nwe invoice)
+    static void createInvoice() {
+        System.out.println("Creating New Invoice . .");
+        Scanner scanner = new Scanner(System.in);
+        Invoice invoice = new Invoice();
+        List<Item> selectedItems = new ArrayList<>();
+
+
+        //asking user to input invoice details
+        System.out.print("Enter invoice ID: ");
+        Integer invoiceID = scanner.nextInt();
+        scanner.nextLine(); //consume new line
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter customer phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter invoice date (e.g., DD-MM-YYYY): ");
+        String date = scanner.nextLine();
+
+        if (items.isEmpty()) { //no items in list
+            System.out.println("No Items Available");
+        } else {
+            //showing list of items
+            System.out.println("Available Items:");
+            displayAllItems();
+
+            while (true) {
+                //prompting user to select item ID to add it to the invoice
+                System.out.println("Enter Item ID to add it to the invoice (press 0 to quit): ");
+
+                Integer itemID = scanner.nextInt();
+                if (itemID == 0) {
+                    break; //exit while loop
+                }
+
+                Item itemToBeAdded = findItemByID(itemID); //finding to item by its ID
+                if (itemToBeAdded != null) {
+                    selectedItems.add(itemToBeAdded); //adding the item to selected items list
+                    System.out.println("Item: " + itemToBeAdded.getName() + " is added to the invoice");
+                } else {
+                    System.out.println("Item not found");
+                }
+            }
+
+            //creating and adding the invoice to the list of invoices
+            newInvoice = new Invoice(invoiceID, customerName, phoneNumber, date, selectedItems, invoice.totalAmount(selectedItems));
+
+            invoices.add(newInvoice);
+            System.out.println("Invoice is created successfully");
+
+            //printing the invoice
+            System.out.println("\nInvoice Details:");
+            System.out.println("-------------------------------------------");
+            System.out.println("Item ID \t  Item Name\t Quantity\t  Unit Price\t    Total Amount");
+            for (Item item : selectedItems) {
+                System.out.printf("%d   \t%s    \t%d    \t%.2f  \t%.2f%n",
+                        item.getItemID(),
+                        item.getName(),
+                        item.getQuantity(),
+                        item.getUnitPrice(),
+                        item.getQuantity() * item.getUnitPrice());
+            }
+            System.out.println("Total Amount: $" + newInvoice.totalAmount(selectedItems));
+        }
+    }
+
+    //method to find item by ID
+    private static Item findItemByID(Integer itemID) {
+        for (Item item : items) {
+            if (item.getItemID() == itemID) {
+                return item;
+            }
+        }
+        return null; //if item is not found
+    }
+
+    //method to display items
+    private static void displayAllItems() {
+        for (Item item : items) {
+            System.out.println(
+                    "Item ID: " + item.getItemID() +
+                            "| Name: " + item.getName() +
+                            "| Unit Price: $" + item.getUnitPrice() +
+                            "| Quantity: " + item.getQuantity()
+            );
+        }
+    }
+
+    //method to handle option 4 in Main Menu (Report Item Statistics)
+    static void reportItemStatistics() {
+        System.out.println("Displaying statistics...");
+        System.out.println("Number of items: " + items.size());
+        System.out.println("Number of invoices: " + invoices.size());
+
+        //calculating the total sales
+        Double totalSales = 0.0;
+        for (Invoice invoice : invoices) {
+            totalSales += invoice.getTotalAmount();
+        }
+
+        //displaying total sales
+        System.out.println("Total sales: $" + totalSales);
+    }
+
+    //method to handle option 5 in Main Menu (Report All Invoices)
+    static void reportAllInvoices() {
+        System.out.println("Reporting All Invoices..");
+        System.out.println("--------------------------------------------------------------------------------------");
+
+        if (invoices.isEmpty()) {
+            System.out.println("No invoices found.");
+            System.out.println("--------------------------------------------------------------------------------------");
+            return;
+        }
+
+        System.out.printf("%-12s %-20s %-15s %-12s %-12s%n",
+                "Invoice ID", "Customer Name", "Phone Number", "Date", "Total Amount");
+        System.out.println("--------------------------------------------------------------------------------------");
+
+        for (Invoice invoice : invoices) {
+            System.out.printf("%-12d %-20s %-15s %-12s $%-10.2f%n",
+                    invoice.getInvoiceID(),
+                    invoice.getCostumerName(),
+                    invoice.getPhoneNumber(),
+                    invoice.getDate(),
+                    invoice.getTotalAmount());
+        }
+
+        System.out.println("--------------------------------------------------------------------------------------");
+    }
+
+    //method to handle option 6 in Main Menu (Search Invoices)
+    static void searchInvoices() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Searching Invoices . .");
+
+        //asking user to enter invoice ID
+        System.out.println("Enter invoice ID: ");
+        Integer invoiceToFind = scanner.nextInt();
+
+        Boolean isFound = Boolean.FALSE;
+        //iterating through invoices list to find the matching invoice
+        for (Invoice invoice : invoices) {
+
+            if (invoice.getInvoiceID() == invoiceToFind) {
+                isFound = Boolean.TRUE;
+
+                //displaying found invoice details
+                System.out.println("Invoice Details:");
+                System.out.println("Invoice ID: " + invoice.getInvoiceID());
+                System.out.println("Customer Name: " + invoice.getCostumerName());
+                System.out.println("Phone Number: " + invoice.getPhoneNumber());
+                System.out.println("Date: " + invoice.getDate());
+                System.out.println("Total Amount: $" + invoice.getTotalAmount());
+
+                //displaying items associated with the invoice
+                System.out.println("\nItems:");
+                System.out.printf("%-8s %-15s %-8s %-10s%n",
+                        "Item ID", "Name", "Quantity", "Unit Price");
+                System.out.println("-------------------------------------------");
+                for (Item item : invoice.getItemList()) {
+                    System.out.printf("%-8d %-15s %-8d $%-10.2f%n",
+                            item.getItemID(), item.getName(),
+                            item.getQuantity(), item.getUnitPrice());
+                }
+                System.out.println("-------------------------------------------");
+                break;
+            }
+        }
+        //if ID is not found
+        if (!isFound) {
+            System.out.println("Invoice with ID " + invoiceToFind + " is not found");
+        }
+
     }
 
     //Getters & Setters
@@ -77,11 +250,11 @@ public class Invoice {
     }
 
     public List<Item> getItemList() {
-        return itemList;
+        return items;
     }
 
     public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
+        this.items = itemList;
     }
 
     public Double getTotalAmount() {
@@ -166,7 +339,7 @@ public class Invoice {
                 ", costumerName='" + costumerName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", date='" + date + '\'' +
-                ", itemList=" + itemList +
+                ", itemList=" + items +
                 ", totalAmount=" + totalAmount +
                 ", payedAmount=" + paidAmount +
                 ", balance=" + balance +
