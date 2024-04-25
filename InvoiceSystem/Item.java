@@ -1,6 +1,5 @@
 package InvoiceSystem;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +11,7 @@ public class Item {
     private String name; //item name
     private Double unitPrice;
     private Integer quantity;
-    public static List<Item> items = new ArrayList<>();
+    public static Shop shop = new Shop();
 
     public Item() {
     }
@@ -34,7 +33,7 @@ public class Item {
     //method to add items (option 1 in Manage Items Menu)
     static void addItem() {
         System.out.println("Adding Item . .");
-
+        List <Item> itemList = shop.getItems();
         //asking user to enter item details
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter item ID: ");
@@ -48,7 +47,7 @@ public class Item {
         int quantity = scanner.nextInt();
 
         Item newItem = new Item(itemID, name, unitPrice, quantity);
-        items.add(newItem); //adding the item to the items list
+        itemList.add(newItem); //adding the item to the items list
 
         System.out.println("Item Added Successfully..");
     }
@@ -56,6 +55,8 @@ public class Item {
     //method to delete items (option 2 in Manage Items Menu)
     static void deleteItem() {
         System.out.println("Deleting Item . .");
+        List <Item> itemList = shop.getItems();
+        reportAllItems();
         //asking user to select and delete an item from the items list
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter item ID to delete: ");
@@ -65,7 +66,7 @@ public class Item {
         Boolean isFound = Boolean.FALSE;
         Item itemToRemove = null;
 
-        for (Item item : items) {
+        for (Item item : itemList) {
             if (item != null && item.getItemID() != null && item.getItemID().equals(deleteItem)) {
                 itemToRemove = item;
                 isFound = Boolean.TRUE;
@@ -73,7 +74,7 @@ public class Item {
             }
         }
         if (isFound) {
-            items.remove(itemToRemove);
+            itemList.remove(itemToRemove);
             System.out.println("Item deleted successfully");
         } else {
             System.out.println("Item with ID " + deleteItem + " not found");
@@ -84,13 +85,15 @@ public class Item {
     static void changeItemPrice() {
         System.out.println("Updating Price . .");
         Scanner scanner = new Scanner(System.in);
+        List <Item> itemList = shop.getItems();
+        reportAllItems();
         System.out.println("Enter item ID to update the price: ");
         Integer updatePrice = Integer.valueOf(scanner.next());
 
         Boolean isFound = Boolean.FALSE;
 
 
-        for (Item item : items) {
+        for (Item item : itemList) {
             if (item.getItemID().equals(updatePrice)) {
                 System.out.println("Enter new price: ");
                 Double newPrice = scanner.nextDouble();
@@ -111,14 +114,20 @@ public class Item {
 
     //method to report all items (option 4 in Manage Items Menu)
     static void reportAllItems() {
+        List <Item> itemList = shop.getItems();
         System.out.println("Displaying All Items . .");
         //displaying report of all items in items list
-        if (items.isEmpty()) {
+        if (itemList.isEmpty()) {
             System.out.println("No items available");
         } else {
             System.out.println("List of items: ");
-            for (Item item : items) {
-                System.out.println(item);
+            for (Item item : itemList) {
+                System.out.println(
+                        "Item ID: " + item.getItemID() +
+                                "| Name: " + item.getName() +
+                                "| Unit Price: $" + item.getUnitPrice() +
+                                "| Quantity: " + item.getQuantity()
+                );
             }
         }
     }
