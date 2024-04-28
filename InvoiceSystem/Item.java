@@ -37,7 +37,7 @@ public class Item {
         //asking user to enter item details
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter item ID: ");
-        Integer itemID = scanner.nextInt();
+        Integer itemID = shop.inputValidation(scanner);
         scanner.nextLine(); //consuming newline character after reading Integer
         System.out.print("Enter item name: ");
         String name = scanner.nextLine();
@@ -60,7 +60,9 @@ public class Item {
         //asking user to select and delete an item from the items list
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter item ID to delete: ");
-        Integer deleteItem = Integer.valueOf(scanner.next());
+//        Integer deleteItem = Integer.valueOf(scanner.next());
+        Integer deleteItem = shop.inputValidation(scanner);
+
 
         //finding and removing the item from the items list
         Boolean isFound = Boolean.FALSE;
@@ -88,7 +90,7 @@ public class Item {
         List <Item> itemList = shop.getItems();
         reportAllItems();
         System.out.println("Enter item ID to update the price: ");
-        Integer updatePrice = Integer.valueOf(scanner.next());
+        Integer updatePrice = shop.inputValidation(scanner);
 
         Boolean isFound = Boolean.FALSE;
 
