@@ -1,9 +1,7 @@
 package InvoiceSystem;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class Invoice {
     private Integer id; //class ID
@@ -13,6 +11,7 @@ public class Invoice {
     private String date; //invoice date
     public static List<Item> items = new ArrayList<>();
     public static List<Invoice> invoices = new ArrayList<>();
+    public static Shop shop = new Shop();
     public static Invoice newInvoice;
     private Double totalAmount;
     private Double paidAmount;
@@ -39,10 +38,9 @@ public class Invoice {
         Invoice invoice = new Invoice();
         List<Item> selectedItems = new ArrayList<>();
 
-
         //asking user to input invoice details
         System.out.print("Enter invoice ID: ");
-        Integer invoiceID = scanner.nextInt();
+        Integer invoiceID = shop.inputValidation(scanner);
         scanner.nextLine(); //consume new line
         System.out.print("Enter customer name: ");
         String customerName = scanner.nextLine();
@@ -79,7 +77,7 @@ public class Invoice {
             //creating and adding the invoice to the list of invoices
             newInvoice = new Invoice(invoiceID, customerName, phoneNumber, date, selectedItems, invoice.totalAmount(selectedItems));
 
-            invoices.add(newInvoice);
+            shop.addInvoice(newInvoice);
             System.out.println("Invoice is created successfully");
 
             //printing the invoice
@@ -138,6 +136,7 @@ public class Invoice {
 
     //method to handle option 5 in Main Menu (Report All Invoices)
     static void reportAllInvoices() {
+        List<Invoice> invoices = shop.getInvoices();
         System.out.println("Reporting All Invoices..");
         System.out.println("--------------------------------------------------------------------------------------");
 
