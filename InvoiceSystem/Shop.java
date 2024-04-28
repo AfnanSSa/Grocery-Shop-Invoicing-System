@@ -35,6 +35,14 @@ public class Shop {
         Shop.items = items;
     }
 
+    public static List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public static void setInvoices(List<Invoice> invoices) {
+        Shop.invoices = invoices;
+    }
+
     //methods related to shop
     //method to load data (option 1 in Shop Settings Menu)
     static void loadData() {
@@ -68,7 +76,6 @@ public class Shop {
 
     //method to set invoice header (option 3 in Shop Settings Menu)
     static void setInvoiceHeader() {
-        Shop shop = new Shop();
         System.out.println("\nEnter new invoice header:");
         System.out.print("Tel: ");
         String telNumber = scanner.nextLine();
@@ -88,6 +95,31 @@ public class Shop {
                 email + " | Website: " + website);
     }
 
+    //method to add invoice to the list
+    public void addInvoice(Invoice invoice){
+        invoices.add(invoice);
+    }
+
+    //method for validation check
+    public Integer inputValidation(Scanner scanner) {
+        Integer invoiceID = null;
+        Boolean isValid = Boolean.TRUE;
+        while (isValid) {
+            try {
+                invoiceID = scanner.nextInt();
+                if (invoiceID <= 0) {
+                    System.out.println("Invalid invoice ID. Please enter a positive integer:");
+                    //continue; //continue the loop to prompt for input again
+                } else {
+                    break; //exit the loop if a valid ID is entered
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer:");
+                scanner.nextLine(); //consuming the invalid input
+            }
+        }
+        return invoiceID;
+    }
 
     // equals(), hashCode() and toString() methods
     @Override
