@@ -10,8 +10,8 @@ public class Invoice {
     private String phoneNumber; //costumer phone number
     private String date; //invoice date
     public static List<Item> items = new ArrayList<>();
-    public static List<Invoice> invoices = new ArrayList<>();
     public static Shop shop = new Shop();
+    public static List<Invoice> invoices = shop.getInvoices();
     public static Invoice newInvoice;
     private Double totalAmount;
     private Double paidAmount;
@@ -43,11 +43,11 @@ public class Invoice {
         Integer invoiceID = shop.inputValidation(scanner);
         scanner.nextLine(); //consume new line
         System.out.print("Enter customer name: ");
-        String customerName = scanner.nextLine();
+        String customerName = shop.stringInputValidation(scanner);
         System.out.print("Enter customer phone number: ");
-        String phoneNumber = scanner.nextLine();
+        String phoneNumber = shop.stringInputValidation(scanner);
         System.out.print("Enter invoice date (e.g., DD-MM-YYYY): ");
-        String date = scanner.nextLine();
+        String date = shop.stringInputValidation(scanner);
 
         if (items.isEmpty()) { //no items in list
             System.out.println("No Items Available");
@@ -120,6 +120,7 @@ public class Invoice {
 
     //method to handle option 4 in Main Menu (Report Item Statistics)
     static void reportItemStatistics() {
+        List<Item> items = shop.getItems();
         System.out.println("Displaying statistics...");
         System.out.println("Number of items: " + items.size());
         System.out.println("Number of invoices: " + invoices.size());
