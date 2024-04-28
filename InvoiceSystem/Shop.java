@@ -96,7 +96,7 @@ public class Shop {
     }
 
     //method to add invoice to the list
-    public void addInvoice(Invoice invoice){
+    public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
     }
 
@@ -108,17 +108,43 @@ public class Shop {
             try {
                 invoiceID = scanner.nextInt();
                 if (invoiceID <= 0) {
-                    System.out.println("Invalid invoice ID. Please enter a positive integer:");
+                    System.out.println("Invalid invoice ID. Enter a positive integer:");
                     //continue; //continue the loop to prompt for input again
                 } else {
                     break; //exit the loop if a valid ID is entered
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid integer:");
+                System.out.println("Invalid input. Enter a valid integer:");
                 scanner.nextLine(); //consuming the invalid input
             }
         }
         return invoiceID;
+    }
+
+    //method to check if string input is not empty
+    public String stringInputValidation(Scanner scanner) {
+        String input = " ";
+        while (input.isEmpty()) {
+            input = scanner.nextLine().trim();
+            System.out.println("Input cannot be empty. Please enter a valid value: ");
+        }
+        return input;
+    }
+
+    //method to check if double input is valid
+    public Double doubleInputValidation(Scanner scanner) {
+        Double value = 0.0;
+        while (value <= 0) {
+            if (!scanner.hasNextDouble()) {
+                System.out.println("Invalid input. Enter a valid double value:");
+                scanner.next(); //consuming invalid input
+            }
+            value = scanner.nextDouble();
+            if (value <= 0) {
+                System.out.println("Value must be greater than zero. Enter a valid value: ");
+            }
+        }
+        return value;
     }
 
     // equals(), hashCode() and toString() methods
