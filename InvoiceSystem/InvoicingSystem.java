@@ -9,13 +9,8 @@ public class InvoicingSystem {
     private static Item item = new Item();
     private static Invoice invoice = new Invoice();
 
-    //Lists to store invoiced and items
-    private static List<Item> items = new ArrayList<>();
-    private static List<Invoice> invoices = new ArrayList<>();
-
     //hashmap to store program statistics
     private static Map<Integer, Integer> menuOptionsCounts = new HashMap<>();
-    public static Invoice newInvoice;
 
     public static void main(String[] args) {
         Boolean exit = Boolean.FALSE;
