@@ -23,6 +23,7 @@ public class Item implements ItemManagement{
     }
 
     //method to calculate total amount
+    @Override
     public Double totalAmount(Integer quantity, Double unitPrice) {
         return quantity * unitPrice;
     }
