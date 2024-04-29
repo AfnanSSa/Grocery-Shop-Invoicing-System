@@ -59,27 +59,33 @@ public class Item {
         reportAllItems();
         //asking user to select and delete an item from the items list
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter item ID to delete: ");
-        Integer deleteItem = shop.inputValidation(scanner);
+        Boolean validInput = Boolean.TRUE;
+        Integer deleteItem;
+        while (validInput) {
+            System.out.println("Enter item ID to delete: ");
+            deleteItem = shop.inputValidation(scanner);
 
 
-        //finding and removing the item from the items list
-        Boolean isFound = Boolean.FALSE;
-        Item itemToRemove = null;
+            //finding and removing the item from the items list
+            Boolean isFound = Boolean.FALSE;
+            Item itemToRemove = null;
 
-        for (Item item : itemList) {
-            if (item != null && item.getItemID() != null && item.getItemID().equals(deleteItem)) {
-                itemToRemove = item;
-                isFound = Boolean.TRUE;
+            for (Item item : itemList) {
+                if (item != null && item.getItemID() != null && item.getItemID().equals(deleteItem)) {
+                    itemToRemove = item;
+                    isFound = Boolean.TRUE;
+                    break;
+                }
+            }
+            if (isFound) {
+                itemList.remove(itemToRemove);
+                System.out.println("Item deleted successfully");
                 break;
+            } else {
+                System.out.println("Item with ID " + deleteItem + " not found");
             }
         }
-        if (isFound) {
-            itemList.remove(itemToRemove);
-            System.out.println("Item deleted successfully");
-        } else {
-            System.out.println("Item with ID " + deleteItem + " not found");
-        }
+
     }
 
     //method to change item price (option 3 in Manage Items Menu)
@@ -88,29 +94,35 @@ public class Item {
         Scanner scanner = new Scanner(System.in);
         List<Item> itemList = shop.getItems();
         reportAllItems();
-        System.out.println("Enter item ID to update the price: ");
-        Integer updatePrice = shop.inputValidation(scanner);
+        Boolean validInput = Boolean.TRUE;
+        Integer updatePrice;
 
-        Boolean isFound = Boolean.FALSE;
+        while (validInput) {
+            System.out.println("Enter item ID to update the price: ");
+            updatePrice = shop.inputValidation(scanner);
+
+            Boolean isFound = Boolean.FALSE;
 
 
-        for (Item item : itemList) {
-            if (item.getItemID().equals(updatePrice)) {
-                System.out.println("Enter new price: ");
-                Double newPrice = scanner.nextDouble();
+            for (Item item : itemList) {
+                if (item.getItemID().equals(updatePrice)) {
+                    System.out.println("Enter new price: ");
+                    Double newPrice = scanner.nextDouble();
 
-                //updating the price
-                item.setUnitPrice(newPrice);
-                System.out.println("Item price updated successfully");
+                    //updating the price
+                    item.setUnitPrice(newPrice);
+                    System.out.println("Item price updated successfully");
 
-                isFound = Boolean.TRUE;
+                    isFound = Boolean.TRUE;
+                    break;
+                }
+            }
+            if (isFound) {
                 break;
+            }else {
+                System.out.println("Item with ID " + updatePrice + " not found");
             }
         }
-        if (!isFound) {
-            System.out.println("Item with ID " + updatePrice + " not found");
-        }
-
     }
 
     //method to report all items (option 4 in Manage Items Menu)
