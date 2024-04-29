@@ -101,7 +101,8 @@ public class Invoice implements InvoiceHandler {
     }
 
     //method to find item by ID
-    private static Item findItemByID(Integer itemID) {
+    @Override
+    public Item findItemByID(Integer itemID) {
         for (Item item : items) {
             if (item.getItemID() == itemID) {
                 return item;
@@ -111,7 +112,8 @@ public class Invoice implements InvoiceHandler {
     }
 
     //method to display items
-    private static void displayAllItems() {
+    @Override
+    public void displayAllItems() {
         for (Item item : items) {
             System.out.println(
                     "Item ID: " + item.getItemID() +
