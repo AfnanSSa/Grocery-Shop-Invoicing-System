@@ -3,7 +3,7 @@ package InvoiceSystem;
 import java.util.*;
 
 
-public class Invoice {
+public class Invoice implements InvoiceHandler {
     private Integer id; //class ID
     private Integer invoiceID; //invoice ID
     private String costumerName;
@@ -32,7 +32,8 @@ public class Invoice {
     }
 
     //method to handle option 3 in Main Menu (create nwe invoice)
-    static void createInvoice() {
+    @Override
+    public void createInvoice() {
         System.out.println("Creating New Invoice . .");
         Scanner scanner = new Scanner(System.in);
         Invoice invoice = new Invoice();
@@ -122,7 +123,8 @@ public class Invoice {
     }
 
     //method to handle option 4 in Main Menu (Report Item Statistics)
-    static void reportItemStatistics() {
+    @Override
+    public void reportItemStatistics() {
         List<Item> items = shop.getItems();
         System.out.println("Displaying statistics...");
         System.out.println("Number of items: " + items.size());
@@ -139,7 +141,8 @@ public class Invoice {
     }
 
     //method to handle option 5 in Main Menu (Report All Invoices)
-    static void reportAllInvoices() {
+    @Override
+    public void reportAllInvoices() {
         List<Invoice> invoices = shop.getInvoices();
         System.out.println("Reporting All Invoices..");
         System.out.println("--------------------------------------------------------------------------------------");
@@ -167,7 +170,8 @@ public class Invoice {
     }
 
     //method to handle option 6 in Main Menu (Search Invoices)
-    static void searchInvoices() {
+    @Override
+    public void searchInvoices() {
         List<Invoice> invoices = shop.getInvoices();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Searching Invoices . .");
