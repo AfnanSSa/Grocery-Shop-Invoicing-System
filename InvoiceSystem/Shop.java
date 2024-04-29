@@ -27,7 +27,8 @@ public class Shop implements ShopManagement{
         this.header = header;
     }
 
-    public static List<Item> getItems() {
+    @Override
+    public List<Item> getItems() {
         return items;
     }
 
@@ -35,7 +36,8 @@ public class Shop implements ShopManagement{
         Shop.items = items;
     }
 
-    public static List<Invoice> getInvoices() {
+    @Override
+    public List<Invoice> getInvoices() {
         return invoices;
     }
 
