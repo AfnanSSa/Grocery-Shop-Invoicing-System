@@ -5,5 +5,7 @@ public interface InvoiceHandler {
     void reportItemStatistics();
     void reportAllInvoices();
     void searchInvoices();
+    Item findItemByID(Integer itemID);
+    void displayAllItems();
 
 }
