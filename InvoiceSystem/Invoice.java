@@ -44,10 +44,13 @@ public class Invoice {
         scanner.nextLine(); //consume new line
         System.out.print("Enter customer name: ");
         String customerName = shop.stringInputValidation(scanner);
+        scanner.nextLine(); //consume new line
         System.out.print("Enter customer phone number: ");
         String phoneNumber = shop.stringInputValidation(scanner);
+        scanner.nextLine(); //consume new line
         System.out.print("Enter invoice date (e.g., DD-MM-YYYY): ");
         String date = shop.stringInputValidation(scanner);
+        scanner.nextLine(); //consume new line
 
         if (items.isEmpty()) { //no items in list
             System.out.println("No Items Available");
@@ -165,47 +168,56 @@ public class Invoice {
 
     //method to handle option 6 in Main Menu (Search Invoices)
     static void searchInvoices() {
+        List<Invoice> invoices = shop.getInvoices();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Searching Invoices . .");
 
-        //asking user to enter invoice ID
-        System.out.println("Enter invoice ID: ");
-        Integer invoiceToFind = scanner.nextInt();
+        Boolean validInput = Boolean.TRUE;
+        while (validInput){
+            //asking user to enter invoice ID
+            System.out.println("Enter invoice ID: ");
+            Integer invoiceToFind = shop.inputValidation(scanner);
 
-        Boolean isFound = Boolean.FALSE;
-        //iterating through invoices list to find the matching invoice
-        for (Invoice invoice : invoices) {
+            if (invoiceToFind == 0){
+                return;
+            }
 
-            if (invoice.getInvoiceID() == invoiceToFind) {
-                isFound = Boolean.TRUE;
+            Boolean isFound = Boolean.FALSE;
+            //iterating through invoices list to find the matching invoice
+            for (Invoice invoice : invoices) {
 
-                //displaying found invoice details
-                System.out.println("Invoice Details:");
-                System.out.println("Invoice ID: " + invoice.getInvoiceID());
-                System.out.println("Customer Name: " + invoice.getCostumerName());
-                System.out.println("Phone Number: " + invoice.getPhoneNumber());
-                System.out.println("Date: " + invoice.getDate());
-                System.out.println("Total Amount: $" + invoice.getTotalAmount());
+                if (invoice.getInvoiceID() == invoiceToFind) {
+                    isFound = Boolean.TRUE;
 
-                //displaying items associated with the invoice
-                System.out.println("\nItems:");
-                System.out.printf("%-8s %-15s %-8s %-10s%n",
-                        "Item ID", "Name", "Quantity", "Unit Price");
-                System.out.println("-------------------------------------------");
-                for (Item item : invoice.getItemList()) {
-                    System.out.printf("%-8d %-15s %-8d $%-10.2f%n",
-                            item.getItemID(), item.getName(),
-                            item.getQuantity(), item.getUnitPrice());
+                    //displaying found invoice details
+                    System.out.println("Invoice Details:");
+                    System.out.println("Invoice ID: " + invoice.getInvoiceID());
+                    System.out.println("Customer Name: " + invoice.getCostumerName());
+                    System.out.println("Phone Number: " + invoice.getPhoneNumber());
+                    System.out.println("Date: " + invoice.getDate());
+                    System.out.println("Total Amount: $" + invoice.getTotalAmount());
+
+                    //displaying items associated with the invoice
+                    System.out.println("\nItems:");
+                    System.out.printf("%-8s %-15s %-8s %-10s%n",
+                            "Item ID", "Name", "Quantity", "Unit Price");
+                    System.out.println("-------------------------------------------");
+                    for (Item item : invoice.getItemList()) {
+                        System.out.printf("%-8d %-15s %-8d $%-10.2f%n",
+                                item.getItemID(), item.getName(),
+                                item.getQuantity(), item.getUnitPrice());
+                    }
+                    System.out.println("-------------------------------------------");
+                    break;
                 }
-                System.out.println("-------------------------------------------");
+            }
+            //if ID is not found
+            if (!isFound) {
+                System.out.println("Invoice with ID " + invoiceToFind + " is not found");
+            } else{
                 break;
             }
         }
-        //if ID is not found
-        if (!isFound) {
-            System.out.println("Invoice with ID " + invoiceToFind + " is not found");
-        }
-
     }
 
     //Getters & Setters
