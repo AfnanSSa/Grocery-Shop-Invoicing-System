@@ -2,7 +2,7 @@ package InvoiceSystem;
 
 import java.util.*;
 
-public class Shop {
+public class Shop implements ShopManagement{
     public static Scanner scanner = new Scanner(System.in);
     private Integer id; //class ID
     private String name; //shop name
@@ -45,7 +45,8 @@ public class Shop {
 
     //methods related to shop
     //method to load data (option 1 in Shop Settings Menu)
-    static void loadData() {
+    @Override
+    public void loadData() {
         System.out.println("Loading Data . .");
         //instances of Item Class
         Item firstItem = new Item(7, "Bread", 1.0, 2);
@@ -66,7 +67,8 @@ public class Shop {
     }
 
     //method to set shop name (option 2 in Shop Settings Menu)
-    static void setShopName() {
+    @Override
+    public void setShopName() {
         Shop shop = new Shop();
         System.out.println("\nEnter new shop name: ");
         String newShopName = scanner.nextLine();
@@ -75,7 +77,8 @@ public class Shop {
     }
 
     //method to set invoice header (option 3 in Shop Settings Menu)
-    static void setInvoiceHeader() {
+    @Override
+    public void setInvoiceHeader() {
         System.out.println("\nEnter new invoice header:");
         System.out.print("Tel: ");
         String telNumber = stringInputValidation(scanner);
@@ -100,11 +103,13 @@ public class Shop {
     }
 
     //method to add invoice to the list
+    @Override
     public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
     }
 
     //method for validation check
+    @Override
     public Integer inputValidation(Scanner scanner) {
         Integer invoiceID = null;
         Boolean isValid = Boolean.TRUE;
@@ -126,7 +131,8 @@ public class Shop {
     }
 
     //method to check if string input is not empty
-    public static String stringInputValidation(Scanner scanner) {
+    @Override
+    public String stringInputValidation(Scanner scanner) {
         String input = " ";
         while (input.isEmpty()) {
             input = scanner.nextLine().trim();
@@ -136,6 +142,7 @@ public class Shop {
     }
 
     //method to check if double input is valid
+    @Override
     public Double doubleInputValidation(Scanner scanner) {
         Double value = 0.0;
         while (value <= 0) {
