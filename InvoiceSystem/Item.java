@@ -1,11 +1,10 @@
 package InvoiceSystem;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Item {
+public class Item implements ItemManagement{
     private Integer id; //class ID
     private Integer itemID; //item ID
     private String name; //item name
@@ -30,7 +29,8 @@ public class Item {
 
 
     //method to add items (option 1 in Manage Items Menu)
-    static void addItem() {
+    @Override
+    public void addItem() {
         System.out.println("Adding Item . .");
         List<Item> itemList = shop.getItems();
         //asking user to enter item details
@@ -53,7 +53,8 @@ public class Item {
     }
 
     //method to delete items (option 2 in Manage Items Menu)
-    static void deleteItem() {
+    @Override
+    public void deleteItem() {
         System.out.println("Deleting Item . .");
         List<Item> itemList = shop.getItems();
         reportAllItems();
@@ -89,7 +90,8 @@ public class Item {
     }
 
     //method to change item price (option 3 in Manage Items Menu)
-    static void changeItemPrice() {
+    @Override
+    public void changeItemPrice() {
         System.out.println("Updating Price . .");
         Scanner scanner = new Scanner(System.in);
         List<Item> itemList = shop.getItems();
@@ -126,7 +128,8 @@ public class Item {
     }
 
     //method to report all items (option 4 in Manage Items Menu)
-    static void reportAllItems() {
+    @Override
+    public void reportAllItems() {
         List<Item> itemList = shop.getItems();
         System.out.println("Displaying All Items . .");
         //displaying report of all items in items list
